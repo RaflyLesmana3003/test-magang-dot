@@ -9,4 +9,6 @@ Dalam test ini saya menggunakan php framework berupa laravel
 - lalu jalankan <code>composer install</code>
 - dan jangan lupa generate file <code>.env</code> dengan <code>cp .env.example .env</code>
 
+![Image of Yaktocat](https://github.com/RaflyLesmana3003/test-magang-dot/blob/master/main.png)
+
 
