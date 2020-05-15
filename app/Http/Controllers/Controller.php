@@ -12,23 +12,30 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     
+    // NOTE func task 1
+
     public function task1(Request $request)
     {
+        // get data and convert to array
         $array = array_map('intval', explode(',', $request->numbers));
+
+        // initialize counter
         $largest = 0;
         $secondLargest = 0;
         
+        
         foreach($array as $number) {
             
-            //If it's greater than the value of max
+            //if number is  largest than largest variabel 
             if($number > $largest) {
+                // then initialize secondlargest as largest
                 $secondLargest = $largest;
                 $largest = $number;
             }else {
                 $secondLargest = $request->numbers;
             }
             
-            //If array number is greater than secondMax and less than max
+            //If array number is greater than secondlargest and less than largest
             if($number > $secondLargest && $number < $largest) {
                 $secondLargest = $number;
             }else {
@@ -39,6 +46,8 @@ class Controller extends BaseController
         return view('/task1',['number'=> $request->numbers,'secondlargest'=>$secondLargest]);
     }
 
+
+   // NOTE func task 2
 
    //get data from rajaongkir api
    function curl($url)
@@ -79,13 +88,16 @@ class Controller extends BaseController
        $provinceName = [];
        $matchName = [];
 
+       // get all data from rajaongkir then get only province name for search 
        foreach ($json["rajaongkir"]["results"] as $key => $val) {
            array_push($provinceName,strtolower( $val['province'] ));
         }
         
-        $input = preg_quote( strtolower( $request->prov ), '~'); // don't forget to quote input string!
+        // matching keyword with province name with regex
+        $input = preg_quote( strtolower( $request->prov ), '~'); 
         $result = preg_grep('~' . $input . '~', $provinceName); 
         
+        // last get a whole province data from search result to get province_id for frontend needs
         foreach (array_keys($result) as $key) {
             array_push($matchName,$json["rajaongkir"]["results"][$key]);
         }
@@ -112,14 +124,17 @@ class Controller extends BaseController
  
         $citiesName = [];
         $matchName = [];
- 
+
+        // get all data from rajaongkir then get only cities name for search 
         foreach ($json["rajaongkir"]["results"] as $key => $val) {
             array_push($citiesName,strtolower( $val['city_name'] ));
          }
          
-         $input = preg_quote( strtolower( $request->city ), '~'); // don't forget to quote input string!
+        // matching keyword with cities name with regex
+         $input = preg_quote( strtolower( $request->city ), '~'); 
          $result = preg_grep('~' . $input . '~', $citiesName); 
          
+        // last get a whole city data from search result for frontend needs
          foreach (array_keys($result) as $key) {
              array_push($matchName,$json["rajaongkir"]["results"][$key]);
          }
