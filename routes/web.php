@@ -15,6 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/task1', function () {
+    return view('task1');
+});
+
+Route::get('/number', 'Controller@task1');
+
 Route::get('/task2', function () {
     return view('task2');
 });

@@ -41,7 +41,6 @@
             }
 
             .content {
-                margin-top:-500px;
                 text-align: center;
             }
 

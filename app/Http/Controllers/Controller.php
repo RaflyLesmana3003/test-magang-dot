@@ -12,6 +12,34 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     
+    public function task1(Request $request)
+    {
+        $array = array_map('intval', explode(',', $request->numbers));
+        $largest = 0;
+        $secondLargest = 0;
+        
+        foreach($array as $number) {
+            
+            //If it's greater than the value of max
+            if($number > $largest) {
+                $secondLargest = $largest;
+                $largest = $number;
+            }else {
+                $secondLargest = $request->numbers;
+            }
+            
+            //If array number is greater than secondMax and less than max
+            if($number > $secondLargest && $number < $largest) {
+                $secondLargest = $number;
+            }else {
+                $secondLargest = $request->numbers;
+            }
+        }
+        
+        return view('/task1',['number'=> $request->numbers,'secondlargest'=>$secondLargest]);
+    }
+
+
    //get data from rajaongkir api
    function curl($url)
    {
